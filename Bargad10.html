@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --accent:#ff6f91;
+  --text:#5a2a3c;
+  --bg-slide1:linear-gradient(135deg,#fde2e4,#fff1f7);
+  --bg-slide2:linear-gradient(135deg,#ffe5f0,#ffffff);
+  --bg-gift1:#fff0f6;
+  --bg-gift2:#ffffff;
+  --bg-gift3:#ffe9f2;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  min-height:100vh;
+  font-family:Poppins,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  color:var(--text);
+}
+
+.container{
+  width:100%;
+  max-width:420px;
+  padding:20px;
+  text-align:center;
+}
+
+.slide{
+  display:none;
+  padding:20px;
+  border-radius:25px;
+  animation:fadeUp .6s ease;
+}
+.slide.active{display:block;}
+.slide:nth-of-type(1){background:var(--bg-slide1);}
+.slide:nth-of-type(2){background:var(--bg-slide2);}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(25px);} 
+  to{opacity:1;transform:translateY(0);} 
+}
+
+.buttons{margin-top:25px; position:relative;}
+
+button{
+  padding:14px 30px;
+  font-size:16px;
+  border:none;
+  border-radius:40px;
+  cursor:pointer;
+}
+
+#yesBtn{background:var(--accent); color:white;}
+#noBtn{background:#bbb; color:white; position:absolute;}
+
+.gifts{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  margin-top:25px;
+}
+
+.gift{
+  width:100px;
+  animation:floatGift 3s ease-in-out infinite;
+}
+
+@keyframes floatGift{
+  0%,100%{transform:translateY(0);} 
+  50%{transform:translateY(-8px);} 
+}
+
+.gift img{
+  width:100%;
+  height:100px;
+  object-fit:cover;
+  border-radius:18px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.gift img:hover{ transform:scale(1.08); }
+
+.gift-content{
+  display:none;
+  margin-top:20px;
+  padding:18px;
+  border-radius:20px;
+  animation:fadeUp .5s ease;
+}
+
+#gift1{background:var(--bg-gift1);} 
+#gift2{background:var(--bg-gift2);} 
+#gift3{background:var(--bg-gift3);} 
+
+.letter{
+  background:white;
+  padding:18px;
+  border-radius:15px;
+  min-height:100px;
+}
+
+.heart{
+  position:fixed;
+  font-size:22px;
+  animation:float 5s linear forwards;
+  pointer-events:none;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh);opacity:1;} 
+  to{transform:translateY(-10vh);opacity:0;} 
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="slide active">
+  <h1>Will you be my Valentine? 💕</h1>
+  <div class="buttons">
+    <button id="yesBtn" onclick="nextSlide()">Yes 💖</button>
+    <button id="noBtn">No?</button>
+  </div>
+</div>
+
+<div class="slide">
+  <h1>You said YES 🥹💘</h1>
+  <div class="gifts">
+
+    <div class="gift">
+      <img src="giftthumbnail1.jpg" onclick="openGift(1)">
+    </div>
+
+    <div class="gift">
+      <img src="giftthumbnail2.jpg" onclick="openGift(2)">
+    </div>
+
+    <div class="gift">
+      <img src="gitfthumbnail3.jpg" onclick="openGift(3)">
+    </div>
+
+  </div>
+</div>
+
+<div class="gift-content" id="gift1">
+  <iframe style="border-radius:12px"
+  src="https://open.spotify.com/embed/track/0Q9rHyEG7lME4y2Fqtuxgl"
+  width="100%" height="152"
+  frameborder="0"
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+  </iframe>
+</div>
+
+<div class="gift-content" id="gift2">
+  <div class="letter">
+    my cutest sweetest pookie wookie sweetie pie sugar cube ever,
+    I LOVE the way you smile, the way you laugh, the way you talk.
+    I'll always be grateful to have you in my life!
+    Happy Valentine's Day my sweetheart. 💖
+  </div>
+</div>
+
+<div class="gift-content" id="gift3">
+  <img src="gift.jpg" style="width:100%; border-radius:15px;">
+</div>
+
+</div>
+
+<script>
+const slides=document.querySelectorAll('.slide');
+let current=0;
+const noBtn=document.getElementById('noBtn');
+
+function nextSlide(){
+  slides[current].classList.remove('active');
+  current++;
+  slides[current].classList.add('active');
+  heartShower();
+}
+
+function moveNo(){
+  noBtn.style.left=Math.random()*70+'%';
+  noBtn.style.top=Math.random()*60+'%';
+}
+noBtn.addEventListener('mouseover',moveNo);
+noBtn.addEventListener('click',moveNo);
+
+function openGift(n){
+  document.querySelectorAll('.gift-content').forEach(g=>g.style.display='none');
+  document.getElementById('gift'+n).style.display='block';
+}
+
+function heartShower(){
+  for(let i=0;i<35;i++){
+    const h=document.createElement('div');
+    h.className='heart';
+    h.innerHTML='💗';
+    h.style.left=Math.random()*100+'vw';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+  }
+}
+</script>
+
+</body>
+</html>
